@@ -1,1 +1,1 @@
-web: java -jar build/libs/heyktor.jar
+web: java -jar build/libs/chubecode-0.0.1.jar
