@@ -21,7 +21,8 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 
 fun main(args: Array<String>) {
-    val server = embeddedServer(Netty, port = 8080) {
+    val port = System.getenv("PORT")?.toInt() ?: 23567
+    val server = embeddedServer(Netty, port) {
         install(StatusPages) {
             exception<Throwable> { e ->
                 call.respondText(
