@@ -1,1 +1,1 @@
-web: build/install/HeyKtor
+web: java -jar build/libs/hetktor.jar
