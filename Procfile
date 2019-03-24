@@ -1,1 +1,1 @@
-web: build/install/HeyKtor/bin/HeyKtor
+web: build/install/HeyKtor
