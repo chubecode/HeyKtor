@@ -52,7 +52,7 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
-mainClassName = 'chutien.it.HeyKtor.Application.kt'
+mainClassName = 'chutien.it.ApplicationKt'
 task stage {
     dependsOn installDist
 }
