@@ -43,3 +43,7 @@ dependencies {
 
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }
+mainClassName = 'chubecode.chubecode.HeyKtor.Application.kt'
+task stage {
+    dependsOn installDist
+}
