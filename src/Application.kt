@@ -49,17 +49,28 @@ fun main(args: Array<String>) {
                     )
                 )
             }
-            post("/test") {
-                val request = call.receive<Request>()
-                call.respond(request)
+            get("/test") {
+
+                val data = mutableListOf<ForexItem>()
+                data.add(ForexItem("EUR/GBP",1.6924,999,true))
+                data.add(ForexItem("USD/GBP",0.9824,111,false))
+                data.add(ForexItem("CHF/GBP",0.6815,222,false))
+                data.add (ForexItem("EUR/GBP", 1.6924, 999, true))
+                data.add(ForexItem("USD/GBP", 0.9824, 111, false))
+                data.add(ForexItem("CHF/GBP", 0.6815, 222, false))
+
+                call.respond(data)
             }
         }
     }
     server.start(wait = true)
 }
 
-data class Request(
-    val token: String
+data class ForexItem(
+    val name: String,
+    val price: Double,
+    val time: Long,
+    val isUpTrend: Boolean
 )
 
 data class Person(val name: String, val age: Int)
