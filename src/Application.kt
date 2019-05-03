@@ -1,5 +1,6 @@
 package chutien.it
 
+import com.google.gson.annotations.SerializedName
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call
@@ -41,13 +42,7 @@ fun main(args: Array<String>) {
 
         routing {
             get("/data") {
-                val data = Person("Tien", 25)
-                call.respond(
-                    FreeMarkerContent(
-                        "index.ftl",
-                        mapOf("data" to data), "e"
-                    )
-                )
+
             }
             get("/test") {
 
@@ -58,8 +53,9 @@ fun main(args: Array<String>) {
                 data.add (ForexItem("EUR/GBP", 1.6924, 999, true))
                 data.add(ForexItem("USD/GBP", 0.9824, 111, false))
                 data.add(ForexItem("CHF/GBP", 0.6815, 222, false))
+                val response = Response(1,1,1,data)
 
-                call.respond(data)
+                call.respond(response)
             }
         }
     }
@@ -73,4 +69,9 @@ data class ForexItem(
     val isUpTrend: Boolean
 )
 
-data class Person(val name: String, val age: Int)
+data class Response(
+    @SerializedName("page") val page: Int? = null,
+    @SerializedName("total_results") val totalResults: Int? = null,
+    @SerializedName("total_pages") val totalPages: Int? = null,
+    @SerializedName("results") val results: MutableList<ForexItem>? = null
+)
