@@ -59,10 +59,6 @@ fun main(args: Array<String>) {
                 call.respondText("LAST ITEM: $result")
             }
             get("/test") {
-
-                val client = HttpClient()
-                val bytes : ByteArray = client.call("http://data.fixer.io/api/latest?access_key=33b7a261560056619bb1fb1bcf653b8b&base=USD").response.readBytes()
-
                 val data = mutableListOf<ForexItem>()
                 data.add(ForexItem("EUR/GBP",1.6924,999,true))
                 data.add(ForexItem("USD/GBP",0.9824,111,false))
