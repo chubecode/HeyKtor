@@ -46,6 +46,7 @@ dependencies {
     compile "io.ktor:ktor-gson:$ktor_version"
     compile "io.ktor:ktor-freemarker:$ktor_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.2.1'
+    implementation("com.squareup.retrofit2:retrofit:2.4.0")
 
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }

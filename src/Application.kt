@@ -6,6 +6,9 @@ import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.client.HttpClient
+import io.ktor.client.call.call
+import io.ktor.client.response.readBytes
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
 import io.ktor.freemarker.FreeMarker
@@ -22,7 +25,9 @@ import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.reactivex.Flowable
+import io.reactivex.Scheduler
 import kotlinx.coroutines.reactive.awaitLast
+import response.ForexListResponse
 import java.util.concurrent.TimeUnit
 
 fun main(args: Array<String>) {
@@ -55,6 +60,9 @@ fun main(args: Array<String>) {
             }
             get("/test") {
 
+                val client = HttpClient()
+                val bytes : ByteArray = client.call("http://data.fixer.io/api/latest?access_key=33b7a261560056619bb1fb1bcf653b8b&base=USD").response.readBytes()
+
                 val data = mutableListOf<ForexItem>()
                 data.add(ForexItem("EUR/GBP",1.6924,999,true))
                 data.add(ForexItem("USD/GBP",0.9824,111,false))
@@ -62,7 +70,7 @@ fun main(args: Array<String>) {
                 data.add (ForexItem("EUR/GBP", 1.6924, 999, true))
                 data.add(ForexItem("USD/GBP", 0.9824, 111, false))
                 data.add(ForexItem("CHF/GBP", 0.6815, 222, false))
-                val response = Response(1,1,1,data)
+                val response = ForexListResponse(true, 1, "USD", "2019",data)
                 call.respond(response)
 
             }
@@ -78,9 +86,4 @@ data class ForexItem(
     val isUpTrend: Boolean
 )
 
-data class Response(
-    @SerializedName("page") val page: Int? = null,
-    @SerializedName("total_results") val totalResults: Int? = null,
-    @SerializedName("total_pages") val totalPages: Int? = null,
-    @SerializedName("results") val results: MutableList<ForexItem>? = null
-)
+
