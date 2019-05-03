@@ -1,6 +1,7 @@
 package chutien.it
 
 import com.google.gson.annotations.SerializedName
+import com.google.gson.internal.GsonBuildConfig
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call
@@ -20,6 +21,9 @@ import io.ktor.routing.post
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import io.reactivex.Flowable
+import kotlinx.coroutines.reactive.awaitLast
+import java.util.concurrent.TimeUnit
 
 fun main(args: Array<String>) {
     val port = System.getenv("PORT")?.toInt() ?: 23567
@@ -41,8 +45,13 @@ fun main(args: Array<String>) {
         }
 
         routing {
-            get("/data") {
+            get("/") {
+                val result = Flowable.range(1, 10)
+                    .map { it * it }
+                    .delay(300L, TimeUnit.MILLISECONDS)
+                    .awaitLast()
 
+                call.respondText("LAST ITEM: $result")
             }
             get("/test") {
 
@@ -54,8 +63,8 @@ fun main(args: Array<String>) {
                 data.add(ForexItem("USD/GBP", 0.9824, 111, false))
                 data.add(ForexItem("CHF/GBP", 0.6815, 222, false))
                 val response = Response(1,1,1,data)
-
                 call.respond(response)
+
             }
         }
     }

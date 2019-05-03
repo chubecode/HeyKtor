@@ -18,6 +18,8 @@ mainClassName = "io.ktor.server.netty.EngineMain"
 
 sourceCompatibility = 1.8
 
+
+
 sourceSets {
     main.kotlin.srcDirs = main.java.srcDirs = ['src']
     test.kotlin.srcDirs = test.java.srcDirs = ['test']
@@ -43,6 +45,7 @@ dependencies {
     compile "io.ktor:ktor-client-core-jvm:$ktor_version"
     compile "io.ktor:ktor-gson:$ktor_version"
     compile "io.ktor:ktor-freemarker:$ktor_version"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.2.1'
 
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }
