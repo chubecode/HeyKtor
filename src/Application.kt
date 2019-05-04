@@ -5,6 +5,7 @@ import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.request.get
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
@@ -53,7 +54,17 @@ fun main(args: Array<String>) {
             }
             get("/test") {
 
-                val client = HttpClient()
+                val client = HttpClient(OkHttp) {
+                    engine {
+                        config { // this: OkHttpClient.Builder ->
+                            // ...
+                            followRedirects(true)
+                            // ...
+                        }
+
+
+                    }
+                }
 
                 val response =  client.get<ForexListResponse>("http://data.fixer.io/api/latest?access_key=33b7a261560056619bb1fb1bcf653b8b")
 
