@@ -72,7 +72,6 @@ fun main(args: Array<String>) {
 
                 val response = client.get<ForexListResponse>{
                     url("http://data.fixer.io/api/latest?access_key=33b7a261560056619bb1fb1bcf653b8b")
-                    contentType(ContentType.Application.Json)
                 }
 //
 //                val data = mutableListOf<ForexItem>()
