@@ -1,37 +1,30 @@
 package chutien.it
 
-import com.google.gson.annotations.SerializedName
-import com.google.gson.internal.GsonBuildConfig
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.client.HttpClient
-import io.ktor.client.call.call
-import io.ktor.client.response.readBytes
+import io.ktor.client.request.get
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
 import io.ktor.freemarker.FreeMarker
-import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.gson.gson
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.request.receive
 import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.get
-import io.ktor.routing.post
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.reactivex.Flowable
-import io.reactivex.Scheduler
 import kotlinx.coroutines.reactive.awaitLast
 import response.ForexListResponse
 import java.util.concurrent.TimeUnit
 
 fun main(args: Array<String>) {
-    val port = System.getenv("PORT")?.toInt() ?: 23567
+    val port = System.getenv("PORT")?.toInt() ?: 9254
     val server = embeddedServer(Netty, port) {
         install(StatusPages) {
             exception<Throwable> { e ->
@@ -59,14 +52,20 @@ fun main(args: Array<String>) {
                 call.respondText("LAST ITEM: $result")
             }
             get("/test") {
-                val data = mutableListOf<ForexItem>()
-                data.add(ForexItem("EUR/GBP",1.6924,999,true))
-                data.add(ForexItem("USD/GBP",0.9824,111,false))
-                data.add(ForexItem("CHF/GBP",0.6815,222,false))
-                data.add (ForexItem("EUR/GBP", 1.6924, 999, true))
-                data.add(ForexItem("USD/GBP", 0.9824, 111, false))
-                data.add(ForexItem("CHF/GBP", 0.6815, 222, false))
-                val response = ForexListResponse(true, 1, "USD", "2019",data)
+
+                val client = HttpClient()
+
+                val response =  client.get<ForexListResponse>("http://data.fixer.io/api/latest?access_key=33b7a261560056619bb1fb1bcf653b8b")
+
+//
+//                val data = mutableListOf<ForexItem>()
+//                data.add(ForexItem("EUR/GBP",1.6924,999,true))
+//                data.add(ForexItem("USD/GBP",0.9824,111,false))
+//                data.add(ForexItem("CHF/GBP",0.6815,222,false))
+//                data.add (ForexItem("EUR/GBP", 1.6924, 999, true))
+//                data.add(ForexItem("USD/GBP", 0.9824, 111, false))
+//                data.add(ForexItem("CHF/GBP", 0.6815, 222, false))
+//                val response = ForexListResponse(true, 1, "USD", "2019",data)
                 call.respond(response)
 
             }
