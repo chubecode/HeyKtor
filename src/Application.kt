@@ -3,6 +3,7 @@ package chutien.it
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.client.HttpClient
+import io.ktor.client.call.call
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.features.json.GsonSerializer
 import io.ktor.client.features.json.JsonFeature
@@ -12,7 +13,9 @@ import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
 import io.ktor.gson.gson
 import io.ktor.http.ContentType
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.content.TextContent
 import io.ktor.http.contentType
 import io.ktor.response.respond
 import io.ktor.response.respondText
@@ -70,9 +73,9 @@ fun main(args: Array<String>) {
                     }
                 }
 
-                val response = client.get<ForexListResponse>{
-                    url("http://data.fixer.io/api/latest?access_key=33b7a261560056619bb1fb1bcf653b8b")
-                }
+
+                val response = client.call("http://data.fixer.io/api/latest?access_key=33b7a261560056619bb1fb1bcf653b8b") {
+                    method = HttpMethod.Get }.response
 //
 //                val data = mutableListOf<ForexItem>()
 //                data.add(ForexItem("EUR/GBP",1.6924,999,true))
@@ -82,7 +85,7 @@ fun main(args: Array<String>) {
 //                data.add(ForexItem("USD/GBP", 0.9824, 111, false))
 //                data.add(ForexItem("CHF/GBP", 0.6815, 222, false))
 //                val response = ForexListResponse(true, 1, "USD", "2019",data)
-                call.respond(response)
+                call.respond(response.content.toString())
             }
         }
     }
