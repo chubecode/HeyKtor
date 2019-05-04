@@ -13,6 +13,7 @@ import io.ktor.freemarker.FreeMarker
 import io.ktor.gson.gson
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.contentType
 import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.get
@@ -37,7 +38,6 @@ fun main(args: Array<String>) {
         }
         install(ContentNegotiation) {
             gson()
-
         }
         install(FreeMarker) {
             templateLoader = ClassTemplateLoader(Application::class.java.classLoader, "templates")
@@ -63,10 +63,13 @@ fun main(args: Array<String>) {
                         }
 
 
+
                     }
                 }
 
-                val response =  client.get<ForexListResponse>("http://data.fixer.io/api/latest?access_key=33b7a261560056619bb1fb1bcf653b8b")
+                val response =  client.get<ForexListResponse>("http://data.fixer.io/api/latest?access_key=33b7a261560056619bb1fb1bcf653b8b"){
+                    contentType(ContentType.Application.Json)
+                }
 
 //
 //                val data = mutableListOf<ForexItem>()
