@@ -1,18 +1,23 @@
 package chutien.it
 
+import com.google.gson.Gson
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.client.HttpClient
+import io.ktor.client.call.call
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.request.get
+import io.ktor.client.request.url
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
 import io.ktor.freemarker.FreeMarker
 import io.ktor.gson.gson
 import io.ktor.http.ContentType
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.content.TextContent
 import io.ktor.http.contentType
 import io.ktor.response.respond
 import io.ktor.response.respondText
@@ -20,6 +25,7 @@ import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import io.ktor.util.url
 import io.reactivex.Flowable
 import kotlinx.coroutines.reactive.awaitLast
 import response.ForexListResponse
@@ -53,9 +59,12 @@ fun main(args: Array<String>) {
                 call.respondText("LAST ITEM: $result")
             }
             get("/test") {
-
                 val client = HttpClient(OkHttp) {
+                    install(JsonFeature){
+                        serializer = GsonSerializer()
+                    }
                     engine {
+
                         config { // this: OkHttpClient.Builder ->
                             // ...
                             followRedirects(true)
@@ -64,10 +73,12 @@ fun main(args: Array<String>) {
 
 
 
+
                     }
                 }
 
-                val response =  client.get<ForexListResponse>("http://data.fixer.io/api/latest?access_key=33b7a261560056619bb1fb1bcf653b8b"){
+                val response = client.get<ForexListResponse>{
+                    url("http://data.fixer.io/api/latest?access_key=33b7a261560056619bb1fb1bcf653b8b")
                     contentType(ContentType.Application.Json)
                 }
 
