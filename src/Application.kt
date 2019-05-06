@@ -57,7 +57,7 @@ fun main(args: Array<String>) {
                 val symbol:String? = call.request.queryParameters["symbol"]
                 call.respond(
                     FreeMarkerContent(
-                        "index.ftl",
+                        "chart.ftl",
                         mapOf("symbol" to symbol), "e"
                     )
                 )
