@@ -1,5 +1,7 @@
 package chutien.it
 
+import freemarker.cache.ClassTemplateLoader
+import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.client.HttpClient
@@ -11,6 +13,8 @@ import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
+import io.ktor.freemarker.FreeMarker
+import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.gson.gson
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
@@ -43,15 +47,20 @@ fun main(args: Array<String>) {
             gson()
         }
 
+        install(FreeMarker) {
+            templateLoader = ClassTemplateLoader(Application::class.java.classLoader, "templates")
+        }
+
 
         routing {
             get("/") {
-                val result = Flowable.range(1, 10)
-                    .map { it * it }
-                    .delay(300L, TimeUnit.MILLISECONDS)
-                    .awaitLast()
-
-                call.respondText("LAST ITEM: $result")
+                val data = ForexItem("EUR/GBP",1.6924,999,true)
+                call.respond(
+                    FreeMarkerContent(
+                        "index.ftl",
+                        mapOf("data" to data), "e"
+                    )
+                )
             }
             get("/test") {
 
