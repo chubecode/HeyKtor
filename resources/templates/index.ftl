@@ -7,7 +7,7 @@
    <!-- TradingView Widget BEGIN -->
    <div class="tradingview-widget-container">
      <div id="tradingview_4f580"></div>
-     <div class="tradingview-widget-copyright"><a href="https://vn.tradingview.com/symbols/FX-USDJPY/" rel="noopener" target="_blank"><span class="blue-text">USDJPY Biểu đồ</span> </a> bởi TradingView</div>
+     <div class="tradingview-widget-copyright"><a href="https://vn.tradingview.com/symbols/FX-${data.name}/" rel="noopener" target="_blank"><span class="blue-text">${data.name} Biểu đồ</span> </a> bởi TradingView</div>
      <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
      <script type="text/javascript">
      new TradingView.widget(

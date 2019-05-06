@@ -53,7 +53,7 @@ fun main(args: Array<String>) {
 
 
         routing {
-            get("/") {
+            get("/chart") {
                 val data = ForexItem("EURGBP",1.6924,999,true)
                 call.respond(
                     FreeMarkerContent(
