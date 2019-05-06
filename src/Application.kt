@@ -54,11 +54,11 @@ fun main(args: Array<String>) {
 
         routing {
             get("/chart") {
-                val data = ForexItem("EURGBP",1.6924,999,true)
+                val symbol:String? = call.request.queryParameters["symbol"]
                 call.respond(
                     FreeMarkerContent(
                         "index.ftl",
-                        mapOf("data" to data), "e"
+                        mapOf("symbol" to symbol), "e"
                     )
                 )
             }

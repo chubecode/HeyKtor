@@ -1,19 +1,19 @@
 <html>
 
-    <h2>Hello ${data.name}!</h2>
+    <h2>Hello ${symbol}!</h2>
 
     Here is chart
 
    <!-- TradingView Widget BEGIN -->
    <div class="tradingview-widget-container">
      <div id="tradingview_4f580"></div>
-     <div class="tradingview-widget-copyright"><a href="https://vn.tradingview.com/symbols/FX-${data.name}/" rel="noopener" target="_blank"><span class="blue-text">${data.name} Biểu đồ</span> </a> bởi TradingView</div>
+     <div class="tradingview-widget-copyright"><a href="https://vn.tradingview.com/symbols/FX-${symbol}/" rel="noopener" target="_blank"><span class="blue-text">${symbol} Biểu đồ</span> </a> bởi TradingView</div>
      <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
      <script type="text/javascript">
      new TradingView.widget(
      {
      "autosize": true,
-     "symbol": "FX:${data.name}",
+     "symbol": "FX:${symbol}",
      "interval": "240",
      "timezone": "Etc/UTC",
      "theme": "Light",
