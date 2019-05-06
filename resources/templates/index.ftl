@@ -2,7 +2,7 @@
 
     <h2>Hello ${data.name}!</h2>
 
-    Your age is ${data.age}
+    Here is chart
 
     <!-- TradingView Widget BEGIN -->
     <div class="tradingview-widget-container">
