@@ -1,9 +1,4 @@
 <html>
-
-    <h2>Hello ${symbol}!</h2>
-
-    Here is chart
-
    <!-- TradingView Widget BEGIN -->
    <div class="tradingview-widget-container">
      <div id="tradingview_4f580"></div>
