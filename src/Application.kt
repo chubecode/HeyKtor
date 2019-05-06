@@ -54,7 +54,7 @@ fun main(args: Array<String>) {
 
         routing {
             get("/") {
-                val data = ForexItem("EUR/GBP",1.6924,999,true)
+                val data = ForexItem("EURGBP",1.6924,999,true)
                 call.respond(
                     FreeMarkerContent(
                         "index.ftl",
